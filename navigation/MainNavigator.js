@@ -31,7 +31,7 @@ export default TabNavigator(
   {
     lazy: true,
     navigationOptions: {
-      tabBarVisible: true
+      tabBarVisible: false
     }
   }
 );
