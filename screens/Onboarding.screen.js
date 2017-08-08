@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, Image } from 'react-native';
 import Layout from '../constants/Layout';
+import Colors from '../constants/Colors';
 
 import Swiper from 'react-native-swiper';
 import * as Animatable from 'react-native-animatable';
@@ -41,30 +42,39 @@ const SLIDE_DATA = [
 ];
 
 class OnboardingScreen extends Component {
-  state = { index: 0 };
+  state = { index: 0, animation: 'fadeInRight' };
 
   onScrollEnd = (e, state) => {
-    this.titleText.fadeInRight(800).then(() => {
-      this.setState({ index: state.index });
-      console.log('Index is:', state.index);
-    });
+    const animation =
+      state.index > this.state.index ? 'fadeInRight' : 'fadeInLeft';
+    this.setState({ index: state.index, animation });
   };
 
   renderSlides() {
     return SLIDE_DATA.map(slide => {
       return (
         <View key={slide.slideIndex} style={styles.slide}>
-          <Animatable.Text
-            style={styles.title}
-            ref={e => {
-              this.titleText = e;
-            }}
-          >
-            {slide.text}
-          </Animatable.Text>
+          {this.renderSlideContent(slide)}
         </View>
       );
     });
+  }
+
+  renderSlideContent({ slideIndex, text }) {
+    if (this.state.index === slideIndex) {
+      return (
+        <View style={styles.wrapper}>
+          <Text style={styles.title}>TRIPPIN'</Text>
+          <Animatable.Text
+            style={styles.text}
+            easing="ease-out"
+            animation={this.state.animation}
+          >
+            {text}
+          </Animatable.Text>
+        </View>
+      );
+    }
   }
 
   render() {
@@ -72,8 +82,8 @@ class OnboardingScreen extends Component {
       <Swiper
         loop={false}
         onMomentumScrollEnd={this.onScrollEnd}
-        activeDotColor="#B7FD56"
-        dotColor="#444444"
+        activeDotColor={Colors.lime}
+        dotColor="#787284"
       >
         {this.renderSlides()}
       </Swiper>
@@ -82,19 +92,30 @@ class OnboardingScreen extends Component {
 }
 
 var styles = {
-  wrapper: {},
+  wrapper: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 24
+  },
   slide: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#141414',
-    padding: 24
+    backgroundColor: '#121113'
   },
-  title: {
+  text: {
     fontSize: 18,
-    color: 'white',
+    color: '#fff',
     fontWeight: '600',
     textAlign: 'center'
+  },
+  title: {
+    color: 'white',
+    fontSize: 38,
+    paddingBottom: 22,
+    fontFamily: 'zilla-bold',
+    color: Colors.lime
   }
 };
 
