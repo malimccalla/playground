@@ -41,26 +41,41 @@ const SLIDE_DATA = [
 ];
 
 class OnboardingScreen extends Component {
+  state = { index: 0 };
+
   onScrollEnd = (e, state) => {
-    console.log('Index is:', state.index);
+    this.titleText.fadeInRight(800).then(() => {
+      this.setState({ index: state.index });
+      console.log('Index is:', state.index);
+    });
   };
+
+  renderSlides() {
+    return SLIDE_DATA.map(slide => {
+      return (
+        <View key={slide.slideIndex} style={styles.slide}>
+          <Animatable.Text
+            style={styles.title}
+            ref={e => {
+              this.titleText = e;
+            }}
+          >
+            {slide.text}
+          </Animatable.Text>
+        </View>
+      );
+    });
+  }
 
   render() {
     return (
-      <Swiper loop={false} showsButtons onMomentumScrollEnd={this.onScrollEnd}>
-        <View style={styles.slide1}>
-          <Animatable.Text animation="fadeInRight" style={styles.text}>
-            View 1
-          </Animatable.Text>
-        </View>
-        <View style={styles.slide2}>
-          <Text style={styles.text}>View 2</Text>
-        </View>
-        <View style={styles.slide3}>
-          <Animatable.Text animation="fadeInRight" style={styles.text}>
-            View 3
-          </Animatable.Text>
-        </View>
+      <Swiper
+        loop={false}
+        onMomentumScrollEnd={this.onScrollEnd}
+        activeDotColor="#B7FD56"
+        dotColor="#444444"
+      >
+        {this.renderSlides()}
       </Swiper>
     );
   }
@@ -68,28 +83,18 @@ class OnboardingScreen extends Component {
 
 var styles = {
   wrapper: {},
-  slide1: {
+  slide: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#9DD6EB'
+    backgroundColor: '#141414',
+    padding: 24
   },
-  slide2: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#97CAE5'
-  },
-  slide3: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#92BBD9'
-  },
-  text: {
-    color: '#fff',
-    fontSize: 30,
-    fontWeight: 'bold'
+  title: {
+    fontSize: 18,
+    color: 'white',
+    fontWeight: '600',
+    textAlign: 'center'
   }
 };
 
