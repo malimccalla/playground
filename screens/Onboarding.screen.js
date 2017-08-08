@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Image } from 'react-native';
+import { Text, View, Image, TouchableOpacity } from 'react-native';
 import Layout from '../constants/Layout';
 import Colors from '../constants/Colors';
 
@@ -55,9 +55,18 @@ class OnboardingScreen extends Component {
       return (
         <View key={slide.slideIndex} style={styles.slide}>
           {this.renderSlideContent(slide)}
+          {this.renderButton()}
         </View>
       );
     });
+  }
+
+  renderButton() {
+    return (
+      <TouchableOpacity style={styles.button}>
+        <Text style={styles.buttonText}>Get Started</Text>
+      </TouchableOpacity>
+    );
   }
 
   renderSlideContent({ slideIndex, text }) {
@@ -84,6 +93,7 @@ class OnboardingScreen extends Component {
         onMomentumScrollEnd={this.onScrollEnd}
         activeDotColor={Colors.lime}
         dotColor="#787284"
+        showsPagination={this.state.index < SLIDE_DATA.length - 1}
       >
         {this.renderSlides()}
       </Swiper>
@@ -102,7 +112,7 @@ var styles = {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#121113'
+    backgroundColor: Colors.black
   },
   text: {
     fontSize: 18,
@@ -111,11 +121,26 @@ var styles = {
     textAlign: 'center'
   },
   title: {
-    color: 'white',
+    color: '#fff',
     fontSize: 38,
     paddingBottom: 22,
     fontFamily: 'zilla-bold',
     color: Colors.lime
+  },
+  button: {
+    height: 60,
+    width: Layout.window.width,
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#ffffff',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    margin: 24
+  },
+  buttonText: {
+    textAlign: 'center'
   }
 };
 
