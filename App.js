@@ -6,12 +6,9 @@ import { Provider } from 'react-redux';
 import * as Animatable from 'react-native-animatable';
 import animations from './animations';
 import MainNavigator from './navigation/MainNavigator';
+import { cacheImages, cacheFonts } from './services/caching';
 
 import store from './store';
-
-function cacheFonts(fonts) {
-  return fonts.map(font => Font.loadAsync(font));
-}
 
 export default class App extends React.Component {
   state = { appIsReady: false };
@@ -27,7 +24,13 @@ export default class App extends React.Component {
       { 'zilla-bold': require('./assets/fonts/ZillaSlabHighlight-Bold.ttf') }
     ]);
 
-    await Promise.all([...fontAssets]);
+    const imageAssets = cacheImages([
+      require('./assets/images/globe.gif'),
+      require('./assets/images/globe.png'),
+      require('./assets/images/connect.png')
+    ]);
+
+    await Promise.all([...fontAssets, ...cacheImages]);
 
     this.setState({ appIsReady: true });
   }

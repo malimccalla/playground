@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Image, TouchableOpacity } from 'react-native';
+import { Text, View, Image, TouchableOpacity, StatusBar } from 'react-native';
 import Layout from '../constants/Layout';
 import Colors from '../constants/Colors';
 
@@ -31,8 +31,17 @@ const SLIDE_DATA = [
   {
     slideIndex: 2,
     title: 'Title 3',
-    text:
-      "Add your favourite cities. Save your favourite spots. It's your world.",
+    text: 'Connect with friends to share your spots and discover theirs.',
+    uri:
+      'https://cdn.dribbble.com/users/79659/screenshots/2823377/storytrail-cities3.gif',
+    backgroundColor: '#ffffff',
+    textColor: 'white',
+    size: 200
+  },
+  {
+    slideIndex: 3,
+    title: 'Title 3',
+    text: 'Come on in.',
     uri:
       'https://cdn.dribbble.com/users/79659/screenshots/2823377/storytrail-cities3.gif',
     backgroundColor: '#ffffff',
@@ -55,25 +64,36 @@ class OnboardingScreen extends Component {
       return (
         <View key={slide.slideIndex} style={styles.slide}>
           {this.renderSlideContent(slide)}
-          {this.renderButton()}
         </View>
       );
     });
   }
 
   renderButton() {
-    return (
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Get Started</Text>
-      </TouchableOpacity>
-    );
+    if (this.state.index === SLIDE_DATA.length - 1) {
+      return (
+        <Animatable.View
+          animation="slideInUp"
+          easing="ease-out"
+          delay={500}
+          style={styles.buttonWrapper}
+        >
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => this.props.navigation.navigate('auth')}
+          >
+            <Text style={styles.buttonText}>Start Trippin</Text>
+          </TouchableOpacity>
+        </Animatable.View>
+      );
+    }
   }
 
   renderSlideContent({ slideIndex, text }) {
     if (this.state.index === slideIndex) {
       return (
         <View style={styles.wrapper}>
-          <Text style={styles.title}>TRIPPIN'</Text>
+          {this.renderSlideIcon(slideIndex)}
           <Animatable.Text
             style={styles.text}
             easing="ease-out"
@@ -81,8 +101,33 @@ class OnboardingScreen extends Component {
           >
             {text}
           </Animatable.Text>
+          {this.renderButton()}
         </View>
       );
+    }
+  }
+
+  renderSlideIcon(slideIndex) {
+    switch (slideIndex) {
+      case 0:
+        return <Text style={styles.title}>TRIPPIN'</Text>;
+      case 1:
+        return (
+          <Image
+            style={{ height: 200, width: 200, marginTop: -80 }}
+            source={require('../assets/images/globe.gif')}
+          />
+        );
+      case 2:
+        return (
+          <Image
+            source={require('../assets/images/connect.png')}
+            resizeMode="contain"
+            style={{ marginBottom: 32, height: 90 }}
+          />
+        );
+      default:
+        return <Text style={styles.title}>TRIPPIN'</Text>;
     }
   }
 
@@ -107,6 +152,7 @@ var styles = {
     justifyContent: 'center',
     alignItems: 'center',
     padding: 24
+    // marginBottom: 100
   },
   slide: {
     flex: 1,
@@ -129,18 +175,25 @@ var styles = {
   },
   button: {
     height: 60,
-    width: Layout.window.width,
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Colors.lime,
+    borderRadius: 5
+  },
+  buttonWrapper: {
+    height: 60,
+    width: Layout.window.width * 0.92,
     position: 'absolute',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#ffffff',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    margin: 24
+    bottom: 16
   },
   buttonText: {
-    textAlign: 'center'
+    textAlign: 'center',
+    fontSize: 16,
+    color: Colors.black,
+    fontWeight: '600'
   }
 };
 
