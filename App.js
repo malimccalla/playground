@@ -4,9 +4,10 @@ import { TabNavigator, StackNavigator } from 'react-navigation';
 import { Font, AppLoading } from 'expo';
 import { Provider } from 'react-redux';
 import * as Animatable from 'react-native-animatable';
-import animations from './animations';
+import animations from './services/animations';
 import MainNavigator from './navigation/MainNavigator';
 import { cacheImages, cacheFonts } from './services/caching';
+import api from './services/api';
 
 import store from './store';
 
@@ -27,7 +28,8 @@ export default class App extends React.Component {
     const imageAssets = cacheImages([
       require('./assets/images/globe.gif'),
       require('./assets/images/globe.png'),
-      require('./assets/images/connect.png')
+      require('./assets/images/connect.png'),
+      require('./assets/images/facebook_logo.png')
     ]);
 
     await Promise.all([...fontAssets, ...cacheImages]);

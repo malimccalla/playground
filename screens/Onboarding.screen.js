@@ -9,44 +9,20 @@ import * as Animatable from 'react-native-animatable';
 const SLIDE_DATA = [
   {
     slideIndex: 0,
-    title: 'TRIPPIN',
-    text: 'A personal travel library created & curated by you.',
-    uri:
-      'https://s-media-cache-ak0.pinimg.com/originals/a5/6f/c9/a56fc90a5ed23e3047aa9cc902750b54.gif',
-    backgroundColor: '#141414',
-    size: 150,
-    textColor: 'white'
+    text: 'A personal travel library created & curated by you.'
   },
   {
     slideIndex: 1,
-    title: 'Title 3',
     text:
-      "Add your favourite cities. Save your favourite spots. It's your world.",
-    uri:
-      'https://cdn.dribbble.com/users/79659/screenshots/2823377/storytrail-cities3.gif',
-    backgroundColor: '#ffffff',
-    textColor: 'white',
-    size: 200
+      "Add your favourite cities. Save your favourite spots. It's your world."
   },
   {
     slideIndex: 2,
-    title: 'Title 3',
-    text: 'Connect with friends to share your spots and discover theirs.',
-    uri:
-      'https://cdn.dribbble.com/users/79659/screenshots/2823377/storytrail-cities3.gif',
-    backgroundColor: '#ffffff',
-    textColor: 'white',
-    size: 200
+    text: 'Connect with friends to share your spots and discover theirs.'
   },
   {
     slideIndex: 3,
-    title: 'Title 3',
-    text: 'Come on in.',
-    uri:
-      'https://cdn.dribbble.com/users/79659/screenshots/2823377/storytrail-cities3.gif',
-    backgroundColor: '#ffffff',
-    textColor: 'white',
-    size: 200
+    text: `To get started, Log In with Facebook.`
   }
 ];
 
@@ -82,7 +58,11 @@ class OnboardingScreen extends Component {
             style={styles.button}
             onPress={() => this.props.navigation.navigate('auth')}
           >
-            <Text style={styles.buttonText}>Start Trippin</Text>
+            <Image
+              style={styles.facebookLogo}
+              source={require('../assets/images/facebook_logo.png')}
+            />
+            <Text style={styles.buttonText}>Continue with Facebook</Text>
           </TouchableOpacity>
         </Animatable.View>
       );
@@ -178,12 +158,13 @@ var styles = {
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: Colors.lime,
+    flexDirection: 'row',
+    backgroundColor: Colors.facebook,
     borderRadius: 5
   },
   buttonWrapper: {
-    height: 60,
-    width: Layout.window.width * 0.92,
+    height: 58,
+    width: Layout.window.width * 0.9,
     position: 'absolute',
     alignItems: 'center',
     justifyContent: 'center',
@@ -192,8 +173,13 @@ var styles = {
   buttonText: {
     textAlign: 'center',
     fontSize: 16,
-    color: Colors.black,
-    fontWeight: '600'
+    color: 'white',
+    fontWeight: '700'
+  },
+  facebookLogo: {
+    height: 24,
+    width: 24,
+    marginRight: 24
   }
 };
 
