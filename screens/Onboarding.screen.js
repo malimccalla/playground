@@ -56,7 +56,7 @@ class OnboardingScreen extends Component {
         >
           <TouchableOpacity
             style={styles.button}
-            onPress={() => this.props.navigation.navigate('auth')}
+            onPress={() => this.props.navigation.navigate('main')}
           >
             <Image
               style={styles.facebookLogo}

@@ -9,8 +9,8 @@ import ProfileScreen from '../screens/Profile.screen';
 
 export default TabNavigator(
   {
-    onboarding: { screen: OnboardingScreen },
-    auth: { screen: AuthScreen },
+    // onboarding: { screen: OnboardingScreen },
+    // auth: { screen: AuthScreen },
     main: {
       screen: TabNavigator(
         {
@@ -20,9 +20,16 @@ export default TabNavigator(
         },
         {
           tabBarPosition: 'bottom',
-          swipeEnabled: true,
+          swipeEnabled: false,
           tabBarOptions: {
-            labelStyle: { fontSize: 12 }
+            activeTintColor: '#39E782',
+            labelStyle: {
+              fontSize: 12
+            },
+            showLabel: false,
+            style: {
+              backgroundColor: '#050F1A'
+            }
           }
         }
       )
