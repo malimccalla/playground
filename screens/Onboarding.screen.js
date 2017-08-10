@@ -163,7 +163,7 @@ var styles = {
     borderRadius: 5
   },
   buttonWrapper: {
-    height: 58,
+    height: 52,
     width: Layout.window.width * 0.9,
     position: 'absolute',
     alignItems: 'center',
