@@ -6,15 +6,21 @@ import AuthScreen from '../screens/Auth.screen';
 import GuidesScreen from '../screens/Guides.screen';
 import ExploreScreen from '../screens/Explore.screen';
 import ProfileScreen from '../screens/Profile.screen';
+import GuideDetail from '../screens/GuideDetail.screen';
 
 export default TabNavigator(
   {
-    onboarding: { screen: OnboardingScreen },
-    auth: { screen: AuthScreen },
+    // onboarding: { screen: OnboardingScreen },
+    // auth: { screen: AuthScreen },
     main: {
       screen: TabNavigator(
         {
-          guides: { screen: GuidesScreen },
+          guides: {
+            screen: StackNavigator({
+              guidesList: { screen: GuidesScreen },
+              guideDetail: { screen: GuideDetail }
+            })
+          },
           explore: { screen: ExploreScreen },
           profile: { screen: ProfileScreen }
         },

@@ -4,7 +4,7 @@ import { Icon } from 'react-native-elements';
 
 class ExploreScreen extends Component {
   static navigationOptions = () => ({
-    title: 'Map',
+    title: 'Explore',
     tabBarIcon: ({ tintColor }) => {
       return (
         <Icon

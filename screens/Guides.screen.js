@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
-import { Text, View, FlatList, Image, Easing } from 'react-native';
+import {
+  Text,
+  View,
+  FlatList,
+  Image,
+  TouchableWithoutFeedback
+} from 'react-native';
+import { connect } from 'react-redux';
+import * as actions from '../actions/guide.actions';
 import Carousel from 'react-native-snap-carousel';
 import Layout from '../constants/Layout';
 import Colors from '../constants/Colors';
@@ -52,37 +60,47 @@ const guides = [
 
 class GuidesScreen extends Component {
   static navigationOptions = () => ({
-    title: 'Map',
+    title: 'My Guides',
     tabBarIcon: ({ tintColor }) => {
       return <Icon name="view-carousel" size={28} color={tintColor} />;
     }
   });
 
+  onGuideTap = guide => {
+    this.props.setCurrentGuide(guide);
+    this.props.navigation.navigate('guideDetail', { guide });
+  };
+
   renderGuideCard = ({ item, index }, parallaxProps) => {
     return (
-      <View style={styles.guide}>
-        <View style={styles.imageWrapper}>
-          <Image style={styles.image} source={{ uri: item.coverImage }} />
-        </View>
-        <View style={styles.guideTextWrapper}>
-          <View style={styles.guideCountWrapper}>
-            <Text style={styles.cardText}>
-              {item.city}
-            </Text>
+      <TouchableWithoutFeedback
+        onPress={() => this.onGuideTap(item)}
+        style={styles.guide}
+      >
+        <View style={styles.guide}>
+          <View style={styles.imageWrapper}>
+            <Image style={styles.image} source={{ uri: item.coverImage }} />
           </View>
-          <View
-            style={[
-              styles.guideCountWrapper,
-              { borderTopWidth: 1, borderTopColor: '#e4e4e4' }
-            ]}
-          >
-            <View style={styles.circle} />
-            <Text style={[styles.cardText, { fontSize: 16 }]}>
-              {item.numberOfSpots}
-            </Text>
+          <View style={styles.guideTextWrapper}>
+            <View style={styles.guideCountWrapper}>
+              <Text style={styles.cardText}>
+                {item.city}
+              </Text>
+            </View>
+            <View
+              style={[
+                styles.guideCountWrapper,
+                { borderTopWidth: 1, borderTopColor: '#e4e4e4' }
+              ]}
+            >
+              <View style={styles.circle} />
+              <Text style={[styles.cardText, { fontSize: 16 }]}>
+                {item.numberOfSpots}
+              </Text>
+            </View>
           </View>
         </View>
-      </View>
+      </TouchableWithoutFeedback>
     );
   };
 
@@ -110,7 +128,7 @@ class GuidesScreen extends Component {
 
 const styles = {
   spacer: {
-    height: 100,
+    height: 50,
     width: Layout.window.width
   },
   screen: {
@@ -124,7 +142,7 @@ const styles = {
     alignSelf: 'center',
     // flex: 1,
     width: Layout.window.width * 0.82,
-    height: Layout.window.height * 0.65,
+    height: Layout.window.height * 0.64,
     shadowColor: '#999',
     backgroundColor: '#fff',
     shadowOpacity: 0.82,
@@ -166,7 +184,7 @@ const styles = {
   circle: {
     height: 10,
     width: 10,
-    backgroundColor: 'red',
+    backgroundColor: '#9966FF',
     marginRight: 4,
     borderRadius: 100 / 2
   },
@@ -179,4 +197,4 @@ const styles = {
   }
 };
 
-export default GuidesScreen;
+export default connect(null, actions)(GuidesScreen);
