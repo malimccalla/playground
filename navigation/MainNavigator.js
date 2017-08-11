@@ -9,8 +9,8 @@ import ProfileScreen from '../screens/Profile.screen';
 
 export default TabNavigator(
   {
-    // onboarding: { screen: OnboardingScreen },
-    // auth: { screen: AuthScreen },
+    onboarding: { screen: OnboardingScreen },
+    auth: { screen: AuthScreen },
     main: {
       screen: TabNavigator(
         {
